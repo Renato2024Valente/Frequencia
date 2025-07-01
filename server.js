@@ -77,20 +77,32 @@ app.post('/api/frequencia', async (req, res) => {
 
 // Se a frequência mensal estiver abaixo de 80%, dispara buscativa com valor real
 if (frequenciaMensal < 80) {
-  await fetch('https://buscativa2025.onrender.com/api/buscativa', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      aluno: aluno,
-      serie: "Não informado",
-      dataFalta: hoje.toISOString().split("T")[0],
-      tipoContato: "A definir",
-      responsavel: "Sistema Frequência",
-      resultado: `Frequência mensal: ${frequenciaMensal.toFixed(1)}%`,
-      observacoes: "Gerado automaticamente a partir de todos os registros do mês"
-    })
-  });
+  try {
+    const resposta = await fetch('https://buscativa2025.onrender.com/api/buscativa', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        aluno: aluno,
+        serie: "Não informado",
+        dataFalta: hoje.toISOString().split("T")[0],
+        tipoContato: "A definir",
+        responsavel: "Sistema Frequência",
+        resultado: `Frequência mensal: ${frequenciaMensal.toFixed(1)}%`,
+        observacoes: "Gerado automaticamente a partir de todos os registros do mês"
+      })
+    });
+
+    const resultado = await resposta.json();
+    console.log("✅ Buscativa enviada:", resultado);
+
+    if (!resposta.ok) {
+      console.error("❌ Falha ao enviar buscativa:", resultado);
+    }
+  } catch (erro) {
+    console.error("❌ Erro de comunicação com buscativa:", erro.message || erro);
+  }
 }
+
 
     res.status(201).json(nova);
   } catch (erro) {
