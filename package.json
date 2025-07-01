@@ -1,0 +1,15 @@
+{
+  "name": "frequencia-alunos",
+  "version": "1.0.0",
+  "description": "Sistema simples de registro de faltas e integração com buscativa.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "node-fetch": "^2.7.0",
+    "uuid": "^9.0.1"
+  }
+}
