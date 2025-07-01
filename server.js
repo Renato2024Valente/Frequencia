@@ -77,7 +77,7 @@ app.post('/api/frequencia', async (req, res) => {
 
 // Se a frequência mensal estiver abaixo de 80%, dispara buscativa com valor real
 if (frequenciaMensal < 80) {
-  await fetch('https://SEU-URL-DO-RENDER/api/buscativa', {
+  await fetch('https://buscativa2025.onrender.com/api/buscativa', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -91,7 +91,6 @@ if (frequenciaMensal < 80) {
     })
   });
 }
-
 
     res.status(201).json(nova);
   } catch (erro) {
